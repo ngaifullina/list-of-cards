@@ -1,67 +1,52 @@
 import React, { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from "./eventsSlice";
+import { addEvent, selectEvents } from "./eventsSlice";
 import styles from "./Events.module.css";
 
 export function Events() {
-  const count = useAppSelector(selectCount);
+  const events = useAppSelector(selectEvents);
   const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState("2");
+  const [eventName, setEventName] = useState("");
 
-  const incrementValue = Number(incrementAmount) || 0;
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setEventName(e.target.value);
+  }
+
+  function handleButtonClick() {
+    if (eventName.length) {
+      dispatch(addEvent(eventName));
+      setEventName("");
+    }
+  }
+
+  function handleEnterPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (eventName.length && e.key === "Enter") {
+      handleButtonClick();
+    }
+  }
 
   return (
     <div>
       <div className={styles.row}>
-        <button
-          className={styles.button}
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          -
-        </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          +
-        </button>
-      </div>
-      <div className={styles.row}>
         <input
           className={styles.textbox}
           aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
+          value={eventName}
+          onChange={handleInputChange}
+          onKeyPress={handleEnterPress}
         />
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
-        >
-          Add Amount
+        <button className={styles.button} onClick={handleButtonClick}>
+          Add Note
         </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
-        >
-          Add Async
-        </button>
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
-        >
-          Add If Odd
-        </button>
+      </div>
+
+      <div className={styles.row}>
+        <ul>
+          {events.map((evt, i) => (
+            <li key={`${evt.name}_${i}`}>{evt.name}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
