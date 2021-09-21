@@ -1,0 +1,16 @@
+.wrapper {
+  position: relative;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.number {
+  position: absolute;
+  top: -4px;
+  right: 2px;
+  font-size: 15px;
+  padding: 2px 6px;
+  background-color: red;
+}
