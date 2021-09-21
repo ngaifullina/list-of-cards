@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { addEvent, selectEvents } from "./eventsSlice";
+import { addEvent, deleteEvents, selectEvents } from "./eventsSlice";
 import styles from "./Events.module.css";
 import { timeMessage } from "./timeMessage";
 
@@ -14,7 +14,7 @@ export function Events() {
     setEventName(e.target.value);
   }
 
-  function handleButtonClick() {
+  function handleSendButtonClick() {
     if (eventName.length) {
       dispatch(addEvent(eventName));
       setEventName("");
@@ -23,8 +23,12 @@ export function Events() {
 
   function handleEnterPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (eventName.length && e.key === "Enter") {
-      handleButtonClick();
+      handleSendButtonClick();
     }
+  }
+
+  function deleteAllEvents() {
+    dispatch(deleteEvents());
   }
 
   return (
@@ -36,9 +40,13 @@ export function Events() {
           value={eventName}
           onChange={handleInputChange}
           onKeyPress={handleEnterPress}
+          placeholder="Введите название события.."
         />
-        <button className={styles.button} onClick={handleButtonClick}>
-          Add Note
+        <button className={styles.button} onClick={handleSendButtonClick}>
+          Отправить
+        </button>
+        <button className={styles.button} onClick={deleteAllEvents}>
+          Удалить все события
         </button>
       </div>
 

@@ -21,10 +21,13 @@ export const eventsSlice = createSlice({
     addEvent: (state, action: PayloadAction<string>) => {
       state.events.unshift({ name: action.payload, timestamp: Date.now() });
     },
+    deleteEvents: (state) => {
+      state.events = [];
+    },
   },
 });
 
-export const { addEvent } = eventsSlice.actions;
+export const { addEvent, deleteEvents } = eventsSlice.actions;
 
 export const selectEvents = (state: RootState) => state.events.events;
 
