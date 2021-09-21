@@ -11,7 +11,7 @@ export type EventsState = {
 };
 
 const initialState: EventsState = {
-  events: [],
+  events: [{ name: "initial event", timestamp: 1632133494000 }],
 };
 
 export const eventsSlice = createSlice({

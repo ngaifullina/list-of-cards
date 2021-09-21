@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { addEvent, selectEvents } from "./eventsSlice";
 import styles from "./Events.module.css";
+import { timeMessage } from "./timeMessage";
 
 export function Events() {
   const events = useAppSelector(selectEvents);
@@ -44,7 +45,10 @@ export function Events() {
       <div className={styles.row}>
         <ul>
           {events.map((evt, i) => (
-            <li key={`${evt.name}_${i}`}>{evt.name}</li>
+            <li key={`${evt.name}_${i}`}>
+              {evt.name}
+              <p>{timeMessage(evt.timestamp, new Date().getMilliseconds())}</p>
+            </li>
           ))}
         </ul>
       </div>
