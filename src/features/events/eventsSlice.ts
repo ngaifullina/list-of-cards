@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
+let randomSentence = require("random-sentence");
 
 export type Event = {
   name: string;
@@ -12,12 +13,7 @@ export type EventsState = {
 };
 
 const initialState: EventsState = {
-  events: [
-    { name: "initial event", timestamp: 1632133494000 },
-    { name: "first", timestamp: 1632133494000 },
-    { name: "second event", timestamp: 1632133494000 },
-    { name: "very very very big event", timestamp: 1632133494000 },
-  ],
+  events: [],
   read: 0,
 };
 
@@ -35,10 +31,21 @@ export const eventsSlice = createSlice({
     markEventsRead: (state) => {
       state.read = state.events.length;
     },
+    loadRandomSentence: (state) => {
+      state.events.unshift({
+        name: randomSentence({ words: 5 }),
+        timestamp: Date.now(),
+      });
+    },
   },
 });
 
-export const { addEvent, deleteEvents, markEventsRead } = eventsSlice.actions;
+export const {
+  addEvent,
+  deleteEvents,
+  markEventsRead,
+  loadRandomSentence,
+} = eventsSlice.actions;
 
 export const selectEvents = (state: RootState) => state.events.events;
 

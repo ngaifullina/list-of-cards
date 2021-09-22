@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
@@ -6,6 +6,7 @@ import {
   deleteEvents,
   selectEvents,
   markEventsRead,
+  loadRandomSentence,
 } from "./eventsSlice";
 import styles from "./Events.module.css";
 
@@ -13,6 +14,11 @@ export function Events() {
   const events = useAppSelector(selectEvents);
   const dispatch = useAppDispatch();
   const [eventName, setEventName] = useState("");
+
+  useEffect(() => {
+    const timer = setInterval(() => dispatch(loadRandomSentence()), 20000);
+    return () => clearTimeout(timer);
+  });
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEventName(e.target.value);
