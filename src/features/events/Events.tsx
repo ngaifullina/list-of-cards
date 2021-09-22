@@ -14,8 +14,12 @@ export function Events() {
   const dispatch = useAppDispatch();
   const [eventName, setEventName] = useState("");
 
+  const timeReceivingEvents = 20000;
   useEffect(() => {
-    const timer = setInterval(() => dispatch(loadRandomSentence()), 20000);
+    const timer = setInterval(
+      () => dispatch(loadRandomSentence()),
+      timeReceivingEvents
+    );
     return () => clearTimeout(timer);
   });
 
@@ -51,19 +55,17 @@ export function Events() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.row}>
-        <div>
-          <input
-            className={styles.textbox}
-            aria-label="Set increment amount"
-            value={eventName}
-            onChange={handleInputChange}
-            onKeyPress={handleEnterPress}
-            placeholder="Введите название события.."
-          />
-          <button className={styles.button} onClick={handleSendButtonClick}>
-            Отправить
-          </button>
-        </div>
+        <input
+          className={styles.textbox}
+          aria-label="Set increment amount"
+          value={eventName}
+          onChange={handleInputChange}
+          onKeyPress={handleEnterPress}
+          placeholder="Введите название события.."
+        />
+        <button className={styles.button} onClick={handleSendButtonClick}>
+          Отправить
+        </button>
 
         <button className={styles.button} onClick={markAllEventsRead}>
           Пометить все события прочитанными

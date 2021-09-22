@@ -22,7 +22,12 @@ export function Bell() {
   }
   return (
     <div className={styles.wrapper} onClick={toggleModal}>
-      {showModal && <div className={styles.triangle}></div>}
+      {showModal && events.length > 0 && (
+        <div>
+          <div className={styles.top}></div>
+          <div className={styles.bottom}></div>
+        </div>
+      )}
       <img src="bell.png" alt="" className={styles.icon} />
       {unreadCount !== 0 && <div className={styles.number}>{unreadCount}</div>}
     </div>

@@ -1,19 +1,23 @@
 import React from "react";
 
-import { useAppSelector } from "../../../app/hooks";
-import { selectEvents, showEvents } from "../eventsSlice";
+import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import { selectEvents, showEvents, toggleShowEvents } from "../eventsSlice";
 import styles from "./List.module.css";
 import { timeMessage } from "../timeMessage";
 
 export function List() {
   const events = useAppSelector(selectEvents);
   const showModal = useAppSelector(showEvents);
-
-  return (
-    <div>
-      {showModal && (
+  const dispatch = useAppDispatch();
+  const numberOfShownEvents = 5;
+  function toggleModal() {
+    dispatch(toggleShowEvents());
+  }
+  if (showModal && events.length) {
+    return (
+      <div>
         <div className={styles.row}>
-          {events.slice(0, 5).map((evt, i) => (
+          {events.slice(0, numberOfShownEvents).map((evt, i) => (
             <div className={styles.item}>
               <div key={`${evt.name}_${i}`} className={styles.name}>
                 {evt.name}
@@ -24,10 +28,14 @@ export function List() {
             </div>
           ))}
           {events.length > 5 && (
-            <a className={styles.link}>посмотреть все...</a>
+            <button className={styles.link} onClick={toggleModal}>
+              посмотреть все...
+            </button>
           )}
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return <div className={styles.row}>Нет событий</div>;
+  }
 }
