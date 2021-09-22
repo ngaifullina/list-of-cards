@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { List } from "./list/List";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../app/hooks";
 import {
   addEvent,
   deleteEvents,
-  showEvents,
   markEventsRead,
   loadRandomSentence,
   toggleShowEvents,
