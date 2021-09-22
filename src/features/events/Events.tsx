@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-
+import { List } from "./list/List";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
   addEvent,
   deleteEvents,
-  selectEvents,
+  showEvents,
   markEventsRead,
   loadRandomSentence,
+  toggleShowEvents,
 } from "./eventsSlice";
 import styles from "./Events.module.css";
 
 export function Events() {
-  const events = useAppSelector(selectEvents);
   const dispatch = useAppDispatch();
   const [eventName, setEventName] = useState("");
 
@@ -44,8 +44,13 @@ export function Events() {
   function markAllEventsRead() {
     dispatch(markEventsRead());
   }
+
+  function toggleModal() {
+    dispatch(toggleShowEvents());
+  }
+
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className={styles.row}>
         <div>
           <input
@@ -67,10 +72,11 @@ export function Events() {
         <button className={styles.button} onClick={deleteAllEvents}>
           Удалить все события
         </button>
-        <button className={styles.button} onClick={deleteAllEvents}>
+        <button className={styles.button} onClick={toggleModal}>
           Скрыть/показать попап нотификаций
         </button>
       </div>
+      <List />
     </div>
   );
 }

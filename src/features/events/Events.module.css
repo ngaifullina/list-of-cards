@@ -5,6 +5,10 @@
   justify-content: center;
 }
 
+.wrapper {
+  display: flex;
+  margin: 30px;
+}
 .value {
   font-size: 78px;
   padding-left: 16px;

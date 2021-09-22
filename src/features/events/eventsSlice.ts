@@ -10,11 +10,13 @@ export type Event = {
 export type EventsState = {
   events: Event[];
   read: number;
+  showEvents: boolean;
 };
 
 const initialState: EventsState = {
   events: [],
   read: 0,
+  showEvents: true,
 };
 
 export const eventsSlice = createSlice({
@@ -37,6 +39,9 @@ export const eventsSlice = createSlice({
         timestamp: Date.now(),
       });
     },
+    toggleShowEvents: (state) => {
+      state.showEvents = !state.showEvents;
+    },
   },
 });
 
@@ -45,10 +50,13 @@ export const {
   deleteEvents,
   markEventsRead,
   loadRandomSentence,
+  toggleShowEvents,
 } = eventsSlice.actions;
 
 export const selectEvents = (state: RootState) => state.events.events;
 
 export const selectRead = (state: RootState) => state.events.read;
+
+export const showEvents = (state: RootState) => state.events.showEvents;
 
 export default eventsSlice.reducer;
