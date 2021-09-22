@@ -1,6 +1,7 @@
 import React from "react";
 import { Events } from "./features/events/Events";
 import { Bell } from "./features/events/bell/Bell";
+import { List } from "./features/events/list/List";
 
 import "./App.css";
 
@@ -11,6 +12,7 @@ function App() {
         <Bell />
       </header>
       <Events />
+      <List />
     </div>
   );
 }

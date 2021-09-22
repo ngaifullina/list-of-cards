@@ -12,5 +12,6 @@
   right: 2px;
   font-size: 15px;
   padding: 2px 6px;
+  border: 1px solid;
   background-color: red;
 }

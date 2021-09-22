@@ -8,10 +8,17 @@ export type Event = {
 
 export type EventsState = {
   events: Event[];
+  read: number;
 };
 
 const initialState: EventsState = {
-  events: [{ name: "initial event", timestamp: 1632133494000 }],
+  events: [
+    { name: "initial event", timestamp: 1632133494000 },
+    { name: "first", timestamp: 1632133494000 },
+    { name: "second event", timestamp: 1632133494000 },
+    { name: "very very very big event", timestamp: 1632133494000 },
+  ],
+  read: 0,
 };
 
 export const eventsSlice = createSlice({
@@ -23,12 +30,18 @@ export const eventsSlice = createSlice({
     },
     deleteEvents: (state) => {
       state.events = [];
+      state.read = 0;
+    },
+    markEventsRead: (state) => {
+      state.read = state.events.length;
     },
   },
 });
 
-export const { addEvent, deleteEvents } = eventsSlice.actions;
+export const { addEvent, deleteEvents, markEventsRead } = eventsSlice.actions;
 
 export const selectEvents = (state: RootState) => state.events.events;
+
+export const selectRead = (state: RootState) => state.events.read;
 
 export default eventsSlice.reducer;
