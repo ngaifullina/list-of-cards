@@ -11,8 +11,10 @@ function App() {
       <header className="App-header">
         <Bell />
       </header>
-      <Events />
-      <List />
+      <div className="row">
+        <Events />
+        <List />
+      </div>
     </div>
   );
 }
