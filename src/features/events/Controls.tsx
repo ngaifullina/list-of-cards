@@ -69,6 +69,7 @@ class ControlsComponent extends React.Component<
       this.submitEvent();
     }
   };
+
   handleDeleteEventsClick = () => {
     this.props.deleteEvents();
   };
@@ -76,6 +77,7 @@ class ControlsComponent extends React.Component<
   handleMarkEventsReadClick = () => {
     this.props.markEventsRead();
   };
+
   render() {
     return (
       <div className={styles.wrapper}>
@@ -122,8 +124,3 @@ class ControlsComponent extends React.Component<
 }
 
 export const Controls = connector(ControlsComponent);
-
-/////
-// const sum = (a: number) => (b: number) => a + b;
-// const add1 = sum(1);
-// console.log(add1(3));
