@@ -1,18 +1,18 @@
 import React from "react";
 
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { selectEvents, selectRead, toggleShowEvents } from "../slice";
+import { selectEvents, selectReadCount, togglePopover } from "../slice";
 
 import styles from "./Bell.module.css";
 
 export function Bell() {
   const events = useAppSelector(selectEvents);
-  const read = useAppSelector(selectRead);
+  const read = useAppSelector(selectReadCount);
   const unreadCount = events.length - read;
   const dispatch = useAppDispatch();
 
   function toggleModal() {
-    dispatch(toggleShowEvents());
+    dispatch(togglePopover());
   }
 
   return (

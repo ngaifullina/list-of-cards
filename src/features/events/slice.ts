@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../app/store";
-let randomSentence = require("random-sentence");
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+// @ts-ignore
+import * as randomSentence from "random-sentence";
 
 export type Event = {
   name: string;
@@ -9,15 +10,17 @@ export type Event = {
 
 export type EventsState = {
   events: Event[];
-  read: number;
-  showEvents: boolean;
+  readCount: number;
+  popoverOpen: boolean;
 };
 
 const initialState: EventsState = {
   events: [],
-  read: 0,
-  showEvents: false,
+  readCount: 0,
+  popoverOpen: false,
 };
+
+const AUTO_EVENT_WORDS_COUNT = 5;
 
 export const eventsSlice = createSlice({
   name: "events",
@@ -28,19 +31,19 @@ export const eventsSlice = createSlice({
     },
     deleteEvents: (state) => {
       state.events = [];
-      state.read = 0;
+      state.readCount = 0;
     },
     markEventsRead: (state) => {
-      state.read = state.events.length;
+      state.readCount = state.events.length;
     },
     loadRandomSentence: (state) => {
       state.events.unshift({
-        name: randomSentence({ words: 5 }),
+        name: randomSentence({ words: AUTO_EVENT_WORDS_COUNT }),
         timestamp: Date.now(),
       });
     },
-    toggleShowEvents: (state) => {
-      state.showEvents = !state.showEvents;
+    togglePopover: (state) => {
+      state.popoverOpen = !state.popoverOpen;
     },
   },
 });
@@ -50,13 +53,13 @@ export const {
   deleteEvents,
   markEventsRead,
   loadRandomSentence,
-  toggleShowEvents,
+  togglePopover,
 } = eventsSlice.actions;
 
 export const selectEvents = (state: RootState) => state.events.events;
 
-export const selectRead = (state: RootState) => state.events.read;
+export const selectReadCount = (state: RootState) => state.events.readCount;
 
-export const showEvents = (state: RootState) => state.events.showEvents;
+export const showPopoverOpen = (state: RootState) => state.events.popoverOpen;
 
 export default eventsSlice.reducer;

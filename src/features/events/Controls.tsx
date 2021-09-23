@@ -1,87 +1,129 @@
-import React, { useState, useEffect } from "react";
-import { Notifications } from "./Notifications";
-import { useAppDispatch } from "../../app/hooks";
+import React from "react";
 import {
   addEvent,
   deleteEvents,
   markEventsRead,
   loadRandomSentence,
-  toggleShowEvents,
+  togglePopover,
 } from "./slice";
+import { connect, ConnectedProps } from "react-redux";
 import styles from "./Controls.module.css";
 
-export function Controls() {
-  const dispatch = useAppDispatch();
-  const [eventName, setEventName] = useState("");
+const connector = connect(null, {
+  addEvent,
+  deleteEvents,
+  markEventsRead,
+  loadRandomSentence,
+  togglePopover,
+});
 
-  const timeReceivingEvents = 5000;
-  useEffect(() => {
-    const timer = setInterval(
-      () => dispatch(loadRandomSentence()),
-      timeReceivingEvents
+export type ControlsComponentProps = ConnectedProps<typeof connector> & {
+  autoEventIntervalMills: number;
+};
+type ControlsComponentState = { eventName: string };
+
+class ControlsComponent extends React.Component<
+  ControlsComponentProps,
+  ControlsComponentState
+> {
+  private interval: NodeJS.Timeout | null;
+
+  constructor(props: ControlsComponentProps) {
+    super(props);
+    this.state = {
+      eventName: "",
+    };
+    this.interval = null;
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(
+      () => this.props.loadRandomSentence(),
+      this.props.autoEventIntervalMills
     );
-    return () => clearTimeout(timer);
-  });
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setEventName(e.target.value);
   }
 
-  function handleSendButtonClick() {
-    if (eventName.length) {
-      dispatch(addEvent(eventName));
-      setEventName("");
+  componentWillUnmount() {
+    if (this.interval) {
+      clearInterval(this.interval);
     }
   }
 
-  function handleEnterPress(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (eventName.length && e.key === "Enter") {
-      handleSendButtonClick();
+  submitEvent = () => {
+    if (this.state.eventName.length) {
+      this.props.addEvent(this.state.eventName);
+      this.setState({ eventName: "" });
     }
-  }
+  };
 
-  function deleteAllEvents() {
-    dispatch(deleteEvents());
-  }
+  handleTogglePopoverClick = () => {
+    this.props.togglePopover();
+  };
 
-  function markAllEventsRead() {
-    dispatch(markEventsRead());
-  }
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ eventName: e.target.value });
+  };
 
-  function toggleModal() {
-    dispatch(toggleShowEvents());
-  }
+  handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      this.submitEvent();
+    }
+  };
+  handleDeleteEventsClick = () => {
+    this.props.deleteEvents();
+  };
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.row}>
-        <div>
-          <input
-            className={styles.textbox}
-            aria-label="Set increment amount"
-            value={eventName}
-            onChange={handleInputChange}
-            onKeyPress={handleEnterPress}
-            placeholder="Введите название события.."
-          />
+  handleMarkEventsReadClick = () => {
+    this.props.markEventsRead();
+  };
+  render() {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.row}>
+          <div>
+            <input
+              className={styles.textbox}
+              aria-label="Set increment amount"
+              value={this.state.eventName}
+              onChange={this.handleInputChange}
+              onKeyPress={this.handleEnterPress}
+              placeholder="Введите название события.."
+            />
+            <button
+              className={`${styles.button} ${styles.button__small}`}
+              onClick={this.submitEvent}
+            >
+              Отправить
+            </button>
+          </div>
+
           <button
-            className={`${styles.button} ${styles.button__small}`}
-            onClick={handleSendButtonClick}
+            className={styles.button}
+            onClick={this.handleMarkEventsReadClick}
           >
-            Отправить
+            Пометить все события прочитанными
+          </button>
+          <button
+            className={styles.button}
+            onClick={this.handleDeleteEventsClick}
+          >
+            Удалить все события
+          </button>
+          <button
+            className={styles.button}
+            onClick={this.handleTogglePopoverClick}
+          >
+            Скрыть/показать попап нотификаций
           </button>
         </div>
-
-        <button className={styles.button} onClick={markAllEventsRead}>
-          Пометить все события прочитанными
-        </button>
-        <button className={styles.button} onClick={deleteAllEvents}>
-          Удалить все события
-        </button>
-        <button className={styles.button} onClick={toggleModal}>
-          Скрыть/показать попап нотификаций
-        </button>
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+export const Controls = connector(ControlsComponent);
+
+/////
+// const sum = (a: number) => (b: number) => a + b;
+// const add1 = sum(1);
+// console.log(add1(3));
