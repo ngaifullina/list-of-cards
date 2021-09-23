@@ -1,11 +1,11 @@
 import React from "react";
 
-import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { selectEvents, showEvents, toggleShowEvents } from "../eventsSlice";
-import styles from "./List.module.css";
-import { timeMessage } from "../timeMessage";
-
-export function List() {
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { selectEvents, showEvents, toggleShowEvents } from "./slice";
+import styles from "./Notifications.module.css";
+import { timeMessage } from "../events/lib/timeMessage";
+import { Bell } from "./lib/Bell";
+export function Notifications() {
   const events = useAppSelector(selectEvents);
   const showModal = useAppSelector(showEvents);
   const dispatch = useAppDispatch();
@@ -13,15 +13,14 @@ export function List() {
   function toggleModal() {
     dispatch(toggleShowEvents());
   }
-  if (showModal && events.length) {
-    return (
-      <div>
+  return (
+    <div>
+      <Bell />
+      {showModal && !!events.length && (
         <div className={styles.row}>
           {events.slice(0, numberOfShownEvents).map((evt, i) => (
-            <div className={styles.item}>
-              <div key={`${evt.name}_${i}`} className={styles.name}>
-                {evt.name}
-              </div>
+            <div key={`${evt.name}_${i}`} className={styles.item}>
+              <div className={styles.name}>{evt.name}</div>
               <div className={styles.time}>
                 {timeMessage(evt.timestamp, new Date().getMilliseconds())}
               </div>
@@ -33,9 +32,10 @@ export function List() {
             </button>
           )}
         </div>
-      </div>
-    );
-  } else {
-    return <div className={styles.row}>Нет событий</div>;
-  }
+      )}
+      {events.length === 0 && showModal && (
+        <div className={styles.row}>Нет событий</div>
+      )}
+    </div>
+  );
 }

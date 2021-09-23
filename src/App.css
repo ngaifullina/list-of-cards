@@ -7,9 +7,9 @@
   height: 100vh;
 }
 .App-header {
-  height: 100px;
+  height: 70px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  margin-right: 70px;
+  background-color: rgba(112, 76, 182, 0.1);
 }

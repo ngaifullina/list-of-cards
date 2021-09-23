@@ -1,6 +1,6 @@
 import React from "react";
-import { Events } from "./features/events/Events";
-import { Bell } from "./features/events/bell/Bell";
+import { Controls } from "./features/events/Controls";
+import { Notifications } from "./features/events/Notifications";
 
 import "./App.css";
 
@@ -8,9 +8,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Bell />
+        <Notifications />
       </header>
-      <Events />
+      <Controls />
     </div>
   );
 }

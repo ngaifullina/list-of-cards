@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { List } from "./list/List";
+import { Notifications } from "./Notifications";
 import { useAppDispatch } from "../../app/hooks";
 import {
   addEvent,
@@ -7,14 +7,14 @@ import {
   markEventsRead,
   loadRandomSentence,
   toggleShowEvents,
-} from "./eventsSlice";
-import styles from "./Events.module.css";
+} from "./slice";
+import styles from "./Controls.module.css";
 
-export function Events() {
+export function Controls() {
   const dispatch = useAppDispatch();
   const [eventName, setEventName] = useState("");
 
-  const timeReceivingEvents = 20000;
+  const timeReceivingEvents = 5000;
   useEffect(() => {
     const timer = setInterval(
       () => dispatch(loadRandomSentence()),
@@ -55,17 +55,22 @@ export function Events() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.row}>
-        <input
-          className={styles.textbox}
-          aria-label="Set increment amount"
-          value={eventName}
-          onChange={handleInputChange}
-          onKeyPress={handleEnterPress}
-          placeholder="Введите название события.."
-        />
-        <button className={styles.button} onClick={handleSendButtonClick}>
-          Отправить
-        </button>
+        <div>
+          <input
+            className={styles.textbox}
+            aria-label="Set increment amount"
+            value={eventName}
+            onChange={handleInputChange}
+            onKeyPress={handleEnterPress}
+            placeholder="Введите название события.."
+          />
+          <button
+            className={`${styles.button} ${styles.button__small}`}
+            onClick={handleSendButtonClick}
+          >
+            Отправить
+          </button>
+        </div>
 
         <button className={styles.button} onClick={markAllEventsRead}>
           Пометить все события прочитанными
@@ -77,7 +82,6 @@ export function Events() {
           Скрыть/показать попап нотификаций
         </button>
       </div>
-      <List />
     </div>
   );
 }

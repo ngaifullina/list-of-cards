@@ -16,7 +16,7 @@ export type EventsState = {
 const initialState: EventsState = {
   events: [],
   read: 0,
-  showEvents: true,
+  showEvents: false,
 };
 
 export const eventsSlice = createSlice({

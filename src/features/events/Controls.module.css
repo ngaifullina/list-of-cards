@@ -8,7 +8,6 @@
 .wrapper {
   display: flex;
   margin: 30px;
-  margin-top: 0;
 }
 
 .value {
@@ -20,9 +19,10 @@
 }
 
 .button {
+  width: 450px;
   appearance: none;
   background: none;
-  font-size: 32px;
+  font-size: 22px;
   padding-left: 12px;
   padding-right: 12px;
   margin-top: 20px;
@@ -36,9 +36,13 @@
   transition: all 0.15s;
 }
 
+.button__small {
+  width: 200px;
+}
+
 .textbox {
   width: 450px;
-  font-size: 32px;
+  font-size: 22px;
   padding: 2px;
   text-align: center;
   margin-right: 15px;
