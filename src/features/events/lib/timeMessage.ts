@@ -1,3 +1,4 @@
+export const SECOND = 1000;
 export const MINUTE = 60000;
 export const HOUR = 3600000;
 export const DAY = 86400000;
@@ -11,8 +12,12 @@ export function timeMessage(
   let differenceMillis = currentTimestampMillis - fromTimestampMillis;
 
   switch (true) {
-    case differenceMillis < MINUTE:
-      return "несколько секунд назад";
+    case differenceMillis < SECOND * 2:
+      return `1 секунду назад`;
+    case differenceMillis >= SECOND * 2 && differenceMillis < SECOND * 5:
+      return `${Math.floor(differenceMillis / SECOND)} секунды назад`;
+    case differenceMillis >= SECOND * 5 && differenceMillis < MINUTE:
+      return `${Math.floor(differenceMillis / SECOND)} секунд назад`;
 
     case differenceMillis > MINUTE && differenceMillis < MINUTE * 2:
       return `1 минуту назад`;

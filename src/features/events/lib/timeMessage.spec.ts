@@ -7,14 +7,21 @@ describe("Past time message", () => {
   it("for 1 second ago", () => {
     const fromTimestamp = CURRENT_TIMESTAMP - SECOND;
     expect(timeMessage(fromTimestamp, CURRENT_TIMESTAMP)).toEqual(
-      "несколько секунд назад"
+      "1 секунду назад"
+    );
+  });
+
+  it("for 3 seconds ago", () => {
+    const fromTimestamp = CURRENT_TIMESTAMP - 3 * SECOND;
+    expect(timeMessage(fromTimestamp, CURRENT_TIMESTAMP)).toEqual(
+      "3 секунды назад"
     );
   });
 
   it("for 10 seconds ago", () => {
     const fromTimestamp = CURRENT_TIMESTAMP - 10 * SECOND;
     expect(timeMessage(fromTimestamp, CURRENT_TIMESTAMP)).toEqual(
-      "несколько секунд назад"
+      "10 секунд назад"
     );
   });
 

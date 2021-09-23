@@ -27,7 +27,7 @@ export function Notifications({ popoverEventsCount }: NotificationsProps) {
             <div key={`${evt.name}_${i}`} className={styles.item}>
               <div className={styles.name}>{evt.name}</div>
               <div className={styles.time}>
-                {timeMessage(evt.timestamp, new Date().getMilliseconds())}
+                {timeMessage(evt.timestamp, Date.now())}
               </div>
             </div>
           ))}
