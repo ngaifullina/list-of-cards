@@ -1,4 +1,4 @@
-## Event notifications
+## List of cards
 
 ### Features:
 
