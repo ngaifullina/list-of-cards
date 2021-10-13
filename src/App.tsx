@@ -1,5 +1,5 @@
 import React from "react";
-import {Card} from './features/cards/Card'
+import {Card} from './features/cards/Cards'
 import "./App.css";
 
 

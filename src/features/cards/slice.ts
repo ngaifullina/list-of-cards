@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { getCards } from "./api";
 
@@ -20,7 +20,17 @@ const initialState: State = {
 export const cardsSlice = createSlice({
   name: "cards",
   initialState,
-  reducers: {},
+  reducers: {
+    likeToggle: (state, action: PayloadAction<string>) => {
+      let likedElement = state.products.findIndex(
+        (p) => p.id === action.payload
+      );
+      state.products[likedElement].liked = !state.products[likedElement].liked;
+    },
+    deleteCard: (state, action: PayloadAction<string>) => {
+      state.products = state.products.filter((p) => p.id !== action.payload);
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getCards.fulfilled, (state, { payload }) => {
@@ -28,9 +38,7 @@ export const cardsSlice = createSlice({
     });
   },
 });
-
-// export const { addEvent, deleteEvents, markEventsRead, togglePopover } =
-//   eventsSlice.actions;
+export const { likeToggle, deleteCard } = cardsSlice.actions;
 
 export const selectCards = (state: RootState) => state.cards.products;
 
