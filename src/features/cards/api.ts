@@ -19,6 +19,7 @@ export const getCards = createAsyncThunk("cards/getCards", async () => {
       id: d.id,
       name: d.name,
       imageLink: d.image_link,
+      liked: false,
     };
   });
 });

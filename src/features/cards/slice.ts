@@ -6,6 +6,7 @@ export type Card = {
   id: string;
   name: string;
   imageLink: string;
+  liked: boolean;
 };
 
 export type State = {
