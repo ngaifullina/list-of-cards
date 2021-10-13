@@ -5,18 +5,15 @@ import { getCards } from "./api";
 export type Card = {
   id: string;
   name: string;
-  url: string;
-  width: number;
-  height: number;
-  box_count: number;
+  imageLink: string;
 };
 
 export type State = {
-  memes: Card[];
+  products: Card[];
 };
 
 const initialState: State = {
-  memes: [],
+  products: [],
 };
 
 export const cardsSlice = createSlice({
@@ -25,8 +22,8 @@ export const cardsSlice = createSlice({
   reducers: {},
 
   extraReducers: (builder) => {
-    builder.addCase(getCards.fulfilled, (state, action) => {
-      state.memes = action.payload;
+    builder.addCase(getCards.fulfilled, (state, { payload }) => {
+      state.products.push(...payload);
     });
   },
 });
@@ -34,6 +31,6 @@ export const cardsSlice = createSlice({
 // export const { addEvent, deleteEvents, markEventsRead, togglePopover } =
 //   eventsSlice.actions;
 
-export const selectCards = (state: RootState) => state.cards.memes;
+export const selectCards = (state: RootState) => state.cards.products;
 
 export default cardsSlice.reducer;

@@ -9,8 +9,8 @@ export function Card() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getCards())
-  });
+      dispatch(getCards())
+  },[]);
 
  
 
@@ -18,7 +18,7 @@ export function Card() {
     <div>
       {!!cards.length && (
         <div>
-        {cards.slice(0,5).map((card, i)=>(
+        {cards.map((card, i)=>(
           <div key={`${card.name}_${i}`} >{card.name}</div>
         ))}
         </div>

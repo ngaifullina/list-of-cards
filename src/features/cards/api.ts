@@ -4,14 +4,21 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export type Card = {
   id: string;
   name: string;
-  url: string;
-  width: number;
-  height: number;
-  box_count: number;
+  image_link: string;
 };
 
-export const getCards = createAsyncThunk(
-  "cards/getCards",
-  async () =>
-    (await axios.get("https://api.imgflip.com/get_memes")).data as Card[]
-);
+export const getCards = createAsyncThunk("cards/getCards", async () => {
+  const data = (
+    await axios.get(
+      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush&product_tags=vegan"
+    )
+  ).data as Card[];
+
+  return data.map((d) => {
+    return {
+      id: d.id,
+      name: d.name,
+      imageLink: d.image_link,
+    };
+  });
+});
