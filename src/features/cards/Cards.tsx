@@ -6,7 +6,7 @@ import styles from "./Cards.module.css";
 import like from './like.png';
 import liked from './liked.png';
 
-export function Card() {
+export function Cards() {
   let cards = useAppSelector(selectCards);
   const filter =  useAppSelector(selectShowLiked);
   const dispatch = useAppDispatch();
@@ -34,7 +34,9 @@ export function Card() {
             <div className={styles.close} onClick={()=>handleDelete(card.id)}></div>
             <div className={styles.card__name}>{card.name}</div>
             <img src={card.imageLink} alt=''/>
-            <div onClick={()=>handleLikeClick(card.id)}><img src={card.liked? liked : like} alt='' className={styles.icon}/></div>
+            <div onClick={()=>handleLikeClick(card.id)}>
+              <img src={card.liked? liked : like} alt='' className={styles.icon}/>
+            </div>
           </div>
         ))}
         </div>
