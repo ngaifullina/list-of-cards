@@ -11,10 +11,12 @@ export type Card = {
 
 export type State = {
   products: Card[];
+  showLiked: boolean;
 };
 
 const initialState: State = {
   products: [],
+  showLiked: false,
 };
 
 export const cardsSlice = createSlice({
@@ -30,6 +32,9 @@ export const cardsSlice = createSlice({
     deleteCard: (state, action: PayloadAction<string>) => {
       state.products = state.products.filter((p) => p.id !== action.payload);
     },
+    toggleShowLikedCards: (state) => {
+      state.showLiked = !state.showLiked;
+    },
   },
 
   extraReducers: (builder) => {
@@ -38,8 +43,10 @@ export const cardsSlice = createSlice({
     });
   },
 });
-export const { likeToggle, deleteCard } = cardsSlice.actions;
+export const { likeToggle, deleteCard, toggleShowLikedCards } =
+  cardsSlice.actions;
 
 export const selectCards = (state: RootState) => state.cards.products;
+export const selectShowLiked = (state: RootState) => state.cards.showLiked;
 
 export default cardsSlice.reducer;

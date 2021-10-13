@@ -1,13 +1,14 @@
 import React, {useEffect} from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectCards,likeToggle,deleteCard } from "./slice";
+import { selectCards,selectShowLiked,likeToggle,deleteCard } from "./slice";
 import {getCards} from './api'
 import styles from "./Cards.module.css";
 import like from './like.png';
 import liked from './liked.png';
 
 export function Card() {
-  const cards = useAppSelector(selectCards);
+  let cards = useAppSelector(selectCards);
+  const filter =  useAppSelector(selectShowLiked);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -20,6 +21,9 @@ export function Card() {
 
  function handleDelete(id:string){
   dispatch(deleteCard(id))
+ }
+ if(filter){
+   cards = cards.filter((c)=>c.liked)
  }
   return (
     <div>
