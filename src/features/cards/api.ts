@@ -10,7 +10,7 @@ export type Card = {
 export const getCards = createAsyncThunk("cards/getCards", async () => {
   const data = (
     await axios.get(
-      "http://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush&product_tags=vegan"
+      "https://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush&product_tags=vegan"
     )
   ).data as Card[];
 
