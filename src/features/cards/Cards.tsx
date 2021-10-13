@@ -13,7 +13,7 @@ export function Cards() {
 
   useEffect(() => {
       dispatch(getCards())
-  },[]);
+  },[dispatch]);
 
  function handleLikeClick(id:string){
   dispatch(likeToggle(id))
