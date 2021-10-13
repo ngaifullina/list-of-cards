@@ -1,6 +1,5 @@
 {
-  "name": "event-notifications",
-  "homepage": "http://gitname.github.io/event-notifications",
+  "name": "list-of-cards",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
