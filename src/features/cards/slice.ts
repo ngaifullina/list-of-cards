@@ -45,8 +45,6 @@ export const cardsSlice = createSlice({
 });
 export const { likeToggle, deleteCard, toggleShowLikedCards } =
   cardsSlice.actions;
-
 export const selectCards = (state: RootState) => state.cards.products;
 export const selectShowLiked = (state: RootState) => state.cards.showLiked;
-
 export default cardsSlice.reducer;
